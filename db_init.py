@@ -19,13 +19,13 @@ for user in data.USERS:
     db.session.commit()
 
 for order in data.ORDERS:
-    month_start, day_start, year_start = order['start_date'].split('/')
+    month_start, day_start, year_start = [int(o) for o in order['start_date'].split('/')]
     month_end, day_end, year_end = order['end_date'].split('/')
     db.session.add(Order(
         id=order['id'],
         name=order['name'],
         description=order['description'],
-        start_date=datetime.date(year=int(year_start), month=int(month_start), day=int(day_start)),
+        start_date=datetime.date(year=year_start, month=month_start, day=day_start),
         end_date=datetime.date(year=int(year_end), month=int(month_end), day=int(day_end)),
         address=order['address'],
         price=order['price'],
